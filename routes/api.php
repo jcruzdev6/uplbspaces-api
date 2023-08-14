@@ -9,8 +9,10 @@ use App\Http\Controllers\API\FacilityController;
 use App\Http\Controllers\API\FacilityTypeController;
 use App\Http\Controllers\API\FacilityRateController;
 use App\Http\Controllers\API\PageController;
+use App\Http\Controllers\API\FAQController;
 use App\Http\Controllers\API\BookingController;
 use App\Http\Controllers\API\BookingDateController;
+use App\Http\Controllers\API\MailerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +52,14 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/pages', 'index');
     Route::get('/pages/{page}', 'show');
 });
+
+Route::controller(FAQController::class)->group(function () {
+    Route::get('/faqs', 'index');
+    Route::get('/faqs/{faq}', 'show');
+});
+
+Route::post('/contactus', [MailerController::class, 'sendContactUs']);
+
 
 /** Authenticated APIs */
 Route::middleware('auth:sanctum')->group(function () {
