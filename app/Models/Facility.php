@@ -35,6 +35,11 @@ class Facility extends Model
         return $this->hasMany('App\Models\FacilityRate');
     }
 
+    public function getMainFacilityRates()
+    {
+        return $this->facility_rates()->where('category', 'facility');
+    }
+
     public function getGroupedDays()
     {
         $days = $this->available_days;

@@ -24,7 +24,9 @@ class FacilityCollection extends ResourceCollection
                     'available_days' => $facility->available_days,
                     'available_days_grp' => $facility->getGroupedDays(),
                     'available_hrs' => $facility->available_hrs,
-                    'facility_type_id' => $facility->facility_type_id
+                    'facility_type_id' => $facility->facility_type_id,
+                    //'facility_rates' => FacilityRateResource::collection($facility->getMainFacilityRates())
+                    'facility_rates' => $this->when(count($facility->facility_rates->where('category', 'facility')) > 0, FacilityRateResource::collection($facility->facility_rates->where('category', 'facility')))
                 ];
             });
     }
