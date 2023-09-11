@@ -18,7 +18,8 @@ class PageResource extends JsonResource
             'name' => $this->name,
             'content' => $this->content,
             'status' => $this->status,
-            'rank' => $this->rank
+            'rank' => $this->rank,
+            'show_nav' => $this->show_nav,
         ];
     }
 

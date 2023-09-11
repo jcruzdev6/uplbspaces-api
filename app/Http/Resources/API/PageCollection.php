@@ -18,7 +18,8 @@ class PageCollection extends ResourceCollection
                 return [
                     'id'   => $page->id,
                     'name' => $page->name,
-                    'rank' => $page->rank
+                    'rank' => $page->rank,
+                    'show_nav' => $page->show_nav,
                 ];
             });
     }

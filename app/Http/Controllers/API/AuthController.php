@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\User;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\API\UserResource;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
 use Laravel\Socialite\Facades\Socialite;
+use App\Mail\SignupMailable;
 use Log;
 
 class AuthController extends Controller
@@ -85,7 +87,7 @@ class AuthController extends Controller
         return redirect('/api/user?token=' . $token . '&origin=login');
     }    
 
-    public function findOrCreateUser($user, $provider)
+    public function findOrCreateUser($user, $provider = '')
     {
         $authUser = User::where('email', $user->email)->orWhere('provider_id', $user->id)->first();
 
@@ -102,6 +104,40 @@ class AuthController extends Controller
 
         return $authUser;
     }
+
+    public function signup(Request $request)
+    {
+        $authUser = User::where('email', $request->email)->first();
+
+        if ($authUser) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Sorry, the email you have entered is already in use.'
+            ], 401);
+        }
+
+        $authUser = new User();
+        $authUser->email = $request->email;
+        $authUser->password = Hash::make($request->password);
+        $authUser->verification_token = sha1(time().$request->email);
+        if ($authUser->save()) {
+            Mail::to($request->email)->send(new SignupMailable($authUser));
+            $request->session()->regenerate();
+            return response()->json([
+                'success' => true,
+                'message' => 'Signup successful. Please check your email for verification.'
+            ], 200);
+            return response()->json(['success' => true], 200);            
+        } else {
+            return response()->json([
+                'success' => trfalseue,
+                'message' => 'An error was encountered. Try again later'
+            ], 400);
+        }
+
+    }
+    
+
     /**
      * @param $provider
      * @return JsonResponse

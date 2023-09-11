@@ -26,7 +26,7 @@ use App\Http\Controllers\API\MailerController;
 */
 
 /** SignIn and SignUp */
-Route::post('/auth/signup', [AuthController::class, 'findOrCreateUser']);
+Route::post('/auth/signup', [AuthController::class, 'signup']);
 Route::post('/auth/signin', [AuthController::class, 'signin']);
 Route::post('/auth/signout', [AuthController::class, 'signout']);   
 Route::middleware(['web'])->group(function () {
