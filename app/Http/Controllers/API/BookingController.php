@@ -6,18 +6,37 @@ use App\Models\Booking;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\API\BookingResource;
 use App\Http\Resources\API\BookingCollection;
+use Illuminate\Support\Facades\Auth;
+use Log;
 
 class BookingController extends Controller
 {
+   
     public function index(Booking $booking)
     {
-        return new BookingCollection($booking->latest()->get());
+        $user = Auth::guard('api')->user();
+        Log::info('Bookings called');
+        Log::info($user);
+        return new BookingCollection($booking->where('booked_by',$user->id)->orderBy('updated_at', 'desc')->get());
+    }
+
+    public function mybookings(Booking $booking)
+    {
+        $user = Auth::guard('api')->user();
+        Log::info('Bookings called');
+        Log::info($user);
+        return new BookingCollection($booking->where('booked_by',$user->id)->orderBy('updated_at', 'desc')->get());
     }
 
     public function show(Booking $booking)
     {
         return new BookingResource($booking);
     }
+
+    public function bookingsById($facilityId) {
+        return new BookingCollection(Booking::where('facility_id',$facilityId)->orderBy('updated_at', 'desc')->get());
+    }
+
 
     public function store(Request $request)
     {

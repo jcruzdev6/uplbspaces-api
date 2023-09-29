@@ -13,30 +13,22 @@ class BookingCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return [
-            'data' => [
-                'booking' => $this->collection->map(function ($booking) {
-                    return [
+        return 
+            $this->collection->map(function ($booking) {
+                return [
                         'id'   => $booking->id,
                         'booking_no' => $booking->booking_no,
+                        'facility_id' => $booking->facility_id,
+                        'facility_name' => $booking->facility->name,
                         'contact_person' => $booking->contact_person,
                         'event_title' => $booking->event_title,
-                        'type_of_use' => $booking->type_of_use,
-                        'num_participants' => $booking->num_participants,
                         'sponsors' => $booking->sponsors,
-                        'reqd_resources' => $booking->reqd_resources,
-                        'addtnl_request' => $booking->addtnl_request,
+                        'cost' => $booking->cost,
+                        'amount_paid' => $booking->amount_paid,
                         'status' => $booking->status,
-                        'waive_fee_doc' => $booking->waive_fee_doc,
-                        'preapproved_by' => $booking->preapproved_by,
-                        'approved_by' => $booking->approved_by,
-                        'verified_by' => $booking->verified_by,
-                        'reviewed_by' => $booking->reviewed_by,
-                        'booked_by' => $booking->booked_by,
+                        'booking_dates' => $booking->when(count($booking->booking_dates) > 0, BookingDateResource::collection($booking->booking_dates))
                     ];
-                })
-            ]
-        ];
+                });
     }
 
     public function with($request)

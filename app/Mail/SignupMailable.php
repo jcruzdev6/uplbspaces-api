@@ -44,7 +44,7 @@ class SignupMailable extends Mailable
         return new Content(
             view: 'mail.signup',
             with: ['email' => $this->user->email,
-                   'linkVerify' => env('VERIFY_URL').'?token='.$this->user->verification_token,
+                   'linkVerify' => env('VERIFY_URL').'?email='.$this->user->email.'&token='.$this->user->verification_token,
                    'imgLogo' => public_path().'/images/email/uplbspaces-logo.png',
                    'imgLaptop' => public_path().'/images/email/laptop.png'],            
         );

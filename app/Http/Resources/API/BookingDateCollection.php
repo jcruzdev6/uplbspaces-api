@@ -13,19 +13,16 @@ class BookingDateCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return [
-            'data' => [
-                'booking_date' => $this->collection->map(function ($booking_date) {
-                    return [
-                        'id'   => $booking_date->id,
-                        'booking_id' => $booking_date->booking_id,
-                        'date' => $booking_date->date,
-                        'start_time' => $booking_date->start_time,
-                        'end_time' => $booking_date->end_time
-                    ];
-                })
-            ]
-        ];
+        return 
+            $this->collection->map(function ($booking_date) {
+                return [
+                    'id'   => $booking_date->id,
+                    'booking_id' => $booking_date->booking_id,
+                    'date' => $booking_date->date,
+                    'start_time' => $booking_date->start_time,
+                    'end_time' => $booking_date->end_time
+                ];
+            });
     }
 
     public function with($request)

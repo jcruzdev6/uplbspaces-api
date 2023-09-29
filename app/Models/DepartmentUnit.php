@@ -14,4 +14,9 @@ class DepartmentUnit extends Model
         return $this->hasMany('App\Models\RegisteredUser');
     }
 
+    public function parent()
+    {
+        return $this->belongsTo('App\Models\DepartmentUnit', 'parent_id');
+    }
+
 }

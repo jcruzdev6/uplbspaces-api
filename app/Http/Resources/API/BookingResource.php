@@ -25,13 +25,21 @@ class BookingResource extends JsonResource
                     'sponsors' => $this->sponsors,
                     'reqd_resources' => $this->reqd_resources,
                     'addtnl_request' => $this->addtnl_request,
-                    'status' => $this->status,
+                    'facility_id' => $this->facility_id,
+                    'facility_name' => $this->facility->name,
                     'waive_fee_doc' => $this->waive_fee_doc,
                     'preapproved_by' => $this->preapproved_by,
                     'approved_by' => $this->approved_by,
                     'verified_by' => $this->verified_by,
                     'reviewed_by' => $this->reviewed_by,
+                    'created_at' => $this->created_at,
+                    'updated_at' => $this->updated_at,
+                    'completed_at' => $this->completed_at,
                     'booked_by' => $this->booked_by,
+                    'status' => $this->status,
+                    'cost' => $this->cost,
+                    'date_paid' => $this->date_paid,
+                    'amount_paid' => $this->amount_paid,
                     'booking_dates' => $this->when(count($this->booking_dates) > 0, BookingDateResource::collection($this->booking_dates))
                 ]
             ]

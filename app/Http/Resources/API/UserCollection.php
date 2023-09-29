@@ -19,6 +19,7 @@ class UserCollection extends ResourceCollection
                     'id'   => $user->id,
                     'email' => $user->email,
                     'email_verified_at' => $user->email_verified_at,
+                    'is_verified' => $user->is_verified,
                     'remember_token' => $user->remember_token,
                     //'socmed_acct' => $user->socmed_acct,
                     //'account_type' => $user->account_type,

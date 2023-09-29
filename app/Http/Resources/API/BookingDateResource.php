@@ -14,15 +14,14 @@ class BookingDateResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'data' => [
-                'this' => [
-                    'id'   => $this->id,
-                    'booking_id' => $this->booking_id,
-                    'date' => $this->date,
-                    'start_time' => $this->start_time,
-                    'end_time' => $this->end_time
-                ]
-            ]
+                'id'   => $this->id,
+                'booking_id' => $this->booking_id,
+                'date' => date('m d, Y', strtotime($this->date)),
+                'date_raw' => date('Y-m-d', strtotime($this->date)),
+                'start_time' => date('h:i A', strtotime($this->start_time)),
+                'end_time' => date('h:i A', strtotime($this->end_time)),
+                'start_time_raw' => date('H', strtotime($this->start_time)),
+                'end_time_raw' => date('H', strtotime($this->end_time))
         ];
     }
 
